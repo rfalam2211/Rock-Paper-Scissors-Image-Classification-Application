@@ -1,0 +1,8 @@
+altair
+pandas == 2.2.2
+streamlit == 1.44.0
+tensorflow == 2.15.1
+tf_keras == 2.15.1
+numpy == 1.26.4
+matplotlib
+seaborn == 0.13.2
