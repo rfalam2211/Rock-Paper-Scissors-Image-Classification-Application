@@ -3,6 +3,7 @@
 🔗 Project Access
 
 Dataset: https://www.kaggle.com/datasets/drgfreeman/rockpaperscissors 
+
 Model Deployment: https://huggingface.co/spaces/rfalam/Graded-Challenge-7_Riko_RMT-043
 
 📁 Repository Structure
