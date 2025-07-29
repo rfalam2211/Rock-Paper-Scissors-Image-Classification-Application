@@ -1,0 +1,3 @@
+URL Dataset: https://www.kaggle.com/datasets/drgfreeman/rockpaperscissors/data 
+URL Model: https://huggingface.co/spaces/rfalam/Graded-Challenge-7_Riko_RMT-043/resolve/main/src/rock_paper_scissors_model.h5
+URL Deployment: https://huggingface.co/spaces/rfalam/Graded-Challenge-7_Riko_RMT-043
