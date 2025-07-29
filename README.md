@@ -1,7 +1,8 @@
 # Rock-Paper-Scissors-Image-Classification-Application
 
 🔗 Project Access
-url: https://www.kaggle.com/datasets/drgfreeman/rockpaperscissors
+
+Dataset: https://www.kaggle.com/datasets/drgfreeman/rockpaperscissors
 Model Deployment: https://huggingface.co/spaces/rfalam/Graded-Challenge-7_Riko_RMT-043
 
 📁 Repository Structure
