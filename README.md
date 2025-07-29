@@ -13,13 +13,15 @@ Model Deployment: https://huggingface.co/spaces/rfalam/Graded-Challenge-7_Riko_R
    
 🌿 Problem Background
 
-Objective dari graded challenge ini adalah untuk membangun model untuk Computer Vision yaitu dengan Convolutional Neural Network (CNN) yang mampu mengklasifikasikan gambar tangan menjadi tiga kategori (batu, kertas, atau gunting) dengan tingkat akurasi yang tinggi. Proyek ini akan mencakup:
+Objective dari project ini adalah untuk membangun model untuk Computer Vision yaitu dengan Convolutional Neural Network (CNN) yang mampu mengklasifikasikan gambar tangan menjadi tiga kategori (batu, kertas, atau gunting) dengan tingkat akurasi yang tinggi. Proyek ini akan mencakup:
 
 Membangun model CNN.
 Melakukan improvisasi model dengan menggunakan teknik Transfer Learning untuk mendapatkan performa yang lebih baik.
 Mengevaluasi kedua model untuk membandingkan performanya dan memilih model terbaik.
 Menyimpan model terbaik dan akan digunakan dalam model deployment.
-User: Pengembang Game/Aplikasi: Mereka dapat menggunakan model ini sebagai komponen dasar untuk menciptakan game atau aplikasi interaktif yang lebih kompleks.
+
+User: 
+- Pengembang Game/Aplikasi: Mereka dapat menggunakan model ini sebagai komponen dasar untuk menciptakan game atau aplikasi interaktif yang lebih kompleks.
 
 🛠️ Tech Stack
 - Python
