@@ -22,8 +22,8 @@ Menyimpan model terbaik dan akan digunakan dalam model deployment.
 User: Pengembang Game/Aplikasi: Mereka dapat menggunakan model ini sebagai komponen dasar untuk menciptakan game atau aplikasi interaktif yang lebih kompleks.
 
 🛠️ Tech Stack
-Python
-TensorFlow / Keras
-Matplotlib, Seaborn (visualisasi)
-Streamlit (deployment)
-Hugging Face Spaces (hosting aplikasi)
+- Python
+- TensorFlow / Keras
+- Matplotlib, Seaborn (visualisasi)
+- Streamlit (deployment)
+- Hugging Face Spaces (hosting aplikasi)
