@@ -3,12 +3,12 @@ import eda
 import prediction
 
 st.set_page_config(
-    page_title='Aplikasi Prediksi Klasifikasi Gambar Batu-Gunting-Kertas',
+    page_title='Rock-Paper-Scissors Classification Prediction App',
     layout='wide',
     initial_sidebar_state='expanded'
 )
 
-page = st.sidebar.selectbox('Pilih Halaman', ('EDA', 'Prediction'))
+page = st.sidebar.selectbox('Select Page', ('EDA', 'Prediction'))
 
 if page == 'EDA':
     eda.run()

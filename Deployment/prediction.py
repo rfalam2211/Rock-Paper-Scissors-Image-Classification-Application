@@ -5,70 +5,82 @@ from PIL import Image
 import numpy as np
 import os
 
-# --- Mengoptimalkan Pemuatan Model dengan Caching ---
-# @st.cache_resource akan memastikan model hanya dimuat sekali saat aplikasi pertama kali dijalankan.
-# Ini akan membuat aplikasi jauh lebih cepat saat pengguna berinteraksi.
+# --- Optimize Model Loading with Caching ---
+# @st.cache_resource ensures the model is only loaded once when the app starts.
+# This makes the app much faster during user interaction.
 @st.cache_resource
 def load_keras_model():
     """
-    Fungsi untuk memuat model Keras dari file rock_paper_scissors_model.h5
+    Function to load the Keras model. Attempts to load the improved model first.
     """
-    # Load Model Keras
-    model_path = './src/rock_paper_scissors_model.h5'
-    if os.path.exists(model_path):
-        model = load_model(model_path)
-        return model
+    # Attempt to load the new improved model
+    base_path = os.path.dirname(__file__)
+    model_path_improved = os.path.join(base_path, 'src', 'rock_paper_scissors_improved_model.h5')
+    model_path_basic = os.path.join(base_path, 'src', 'rock_paper_scissors_model.h5')
+    
+    if os.path.exists(model_path_improved):
+        model = load_model(model_path_improved)
+        return model, 224 # EfficientNet size
+    elif os.path.exists(model_path_basic):
+        model = load_model(model_path_basic)
+        return model, 150 # Basic CNN size
     else:
-        return None
+        return None, None
 
-# --- Fungsi Utama Aplikasi ---
+
+# --- Main Application Function ---
 def run():
-    # --- Judul dan Header ---
-    st.header("Prediksi Gambar Batu-Gunting-Kertas")
+    # --- Title and Header ---
+    st.header("Rock-Paper-Scissors Image Prediction")
     st.write("""
-    Unggah gambar tangan Anda yang membentuk isyarat batu, gunting, atau kertas.
-    Model akan mencoba menebak gambar tersebut.
+    Upload an image of your hand forming a rock, paper, or scissors gesture.
+    The model will attempt to classify the gesture.
     """)
 
-    # --- Memuat Model ---
-    model = load_keras_model()
+    # --- Load Model ---
+    model, target_size = load_keras_model()
 
-    # Periksa apakah model berhasil dimuat
+    # Check if model loaded successfully
     if model is None:
-        st.error("Model tidak dapat dimuat. Pastikan file 'rock_paper_scissors_model.h5' ada di direktori yang sama dengan aplikasi Anda.")
+        st.error("Model could not be loaded. Ensure the model file (.h5) exists in the './src/' directory.")
         return
 
-    # --- Widget untuk Mengunggah Gambar ---
-    uploaded_file = st.file_uploader("Pilih gambar...", type=["jpg"])
 
-    # --- Logika Prediksi ---
+    # --- Image Upload Widget ---
+    uploaded_file = st.file_uploader("Choose an image...", type=["jpg"])
+
+    # --- Prediction Logic ---
     if uploaded_file is not None:
-        # Tampilkan gambar yang diunggah oleh pengguna
+        # Display the image uploaded by user
         image_to_show = Image.open(uploaded_file)
-        st.image(image_to_show, caption="Gambar yang Anda Unggah", use_container_width=True)
+        st.image(image_to_show, caption="Uploaded Image", use_container_width=True)
         st.write("") 
 
-        # Tombol untuk memicu prediksi
-        if st.button("Lakukan Prediksi"):
-            with st.spinner("Model sedang berpikir..."):
-                # 1. Preprocessing Gambar
-                # Gambar perlu diubah menjadi format yang sama seperti saat training.
-                image_for_pred = image_to_show.resize((150, 150)) # Sesuaikan ukuran
-                img_array = np.array(image_for_pred)              # Ubah ke array numpy
-                img_array = np.expand_dims(img_array, axis=0)     # Tambah dimensi batch
-                img_array = img_array / 255.0                     # Rescale nilai piksel
+        # Button to trigger prediction
+        if st.button("Perform Prediction"):
+            with st.spinner("Model is thinking..."):
+                # 1. Image Preprocessing
+                # The image needs to be converted to the same format as during training.
+                image_for_pred = image_to_show.resize((target_size, target_size)) # Adjust size dynamically
 
-                # 2. Lakukan Prediksi
+                img_array = np.array(image_for_pred)              # Convert to numpy array
+                img_array = np.expand_dims(img_array, axis=0)     # Add batch dimension
+                
+                # Rescale only for the basic model. EfficientNet expects [0, 255]
+                if target_size == 150:
+                    img_array = img_array / 255.0
+
+                # 2. Perform Prediction
                 prediction = model.predict(img_array)
                 score = tf.nn.softmax(prediction[0])
 
-                # 3. Tampilkan Hasil
-                class_names = ['Kertas', 'Batu', 'Gunting']
+                # 3. Display Results
+                class_names = ['Paper', 'Rock', 'Scissors']
                 predicted_class = class_names[np.argmax(score)]
                 confidence = 100 * np.max(score)
 
-                st.success(f"Hasil Prediksi: **{predicted_class}**")
-                st.info(f"Nilai Akurasi: **{confidence:.2f}%**")
+                st.success(f"Prediction Result: **{predicted_class}**")
+                st.info(f"Confidence Score: **{confidence:.2f}%**")
 
 if __name__ == "__main__":
     run()

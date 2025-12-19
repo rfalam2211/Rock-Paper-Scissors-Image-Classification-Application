@@ -1,59 +1,68 @@
 import streamlit as st
+import os
 
 
 def run():
-    # Membuat title
-    st.title("Aplikasi klasifikasi Gambar Batu-Gunting-Kertas")
-    st.write("Aplikasi ini menggunakan model Deep Learning untuk memprediksi gambar tangan yang membentuk isyarat batu, gunting, atau kertas.")
+    # Create title
+    st.title("Rock-Paper-Scissors Image Classification App")
+    st.write("This app uses a Deep Learning model to predict hand gestures forming rock, paper, or scissors.")
 
-    # Membuat link untuk melihat url dataset
-    st.write("Dataset yang digunakan dalam aplikasi ini diambil dari Kaggle. Dataset ini berisi gambar tangan yang membentuk isyarat batu, gunting, atau kertas.")
+    # Create link for dataset
+    st.write("The dataset used in this app is taken from Kaggle. It contains images of hands forming rock, paper, or scissors gestures.")
     st.markdown("[View Dataset](https://www.kaggle.com/datasets/drgfreeman/rockpaperscissors/data)")
 
-    # Menampilkan gambar hasil EDA
+    # Display EDA results
     st.subheader("Exploratory Data Analysis (EDA)")
 
 
-    st.write("1. EDA 1: Visualisasi Gambar")
-    st.image("./src/eda1.png", caption="Hasil EDA 1 Visualisasi gambar dari kelas Rock", use_container_width=True)
-    st.image("./src/eda1.2.png", caption="Hasil EDA 1 Visualisasi gambar dari kelas Paper", use_container_width=True)
-    st.image("./src/eda1.3.png", caption="Hasil EDA 1 Visualisasi gambar dari kelas Scissors", use_container_width=True)
-    st.write("Pada dataset tiap gambar memiliki latar belakang berwarna hijau. Hal ini dilakukan karena pada tubuh manusia warna hijau sangat sedikit, sehingga dengan menggunakan latar belakang warna hijau dapat meningkatkan kinerja model dalam membedakan gerakan tangan dengan baik.")
+    # --- Dynamic Image Path Logic ---
+    # Look for local user location if exists, otherwise use relative src folder
+    local_path = r'X:\FTDS\P2\GC7\src'
+    if os.path.exists(local_path):
+        base_src = local_path
+    else:
+        # For deployment (relative to this script)
+        base_src = os.path.join(os.path.dirname(__file__), 'src')
+
+    st.write("1. EDA 1: Image Visualization")
+    st.image(os.path.join(base_src, "eda1.png"), caption="EDA 1 Result: Image visualization from Rock class", use_container_width=True)
+    st.image(os.path.join(base_src, "eda1.2.png"), caption="EDA 1 Result: Image visualization from Paper class", use_container_width=True)
+    st.image(os.path.join(base_src, "eda1.3.png"), caption="EDA 1 Result: Image visualization from Scissors class", use_container_width=True)
+    st.write("In the dataset, each image has a green background. This is done because the color green is very sparse on the human body, so using a green background improves the model's performance in distinguishing hand movements effectively.")
     st.divider()
 
-    st.write("2. EDA 2: Distribusi Tiap Kelas")
-    st.image("./src/eda2.png", caption="Hasil EDA 2 Distribusi Tiap Kelas", use_container_width=True)  
-    st.write("Gambar di atas menunjukkan distribusi jumlah gambar untuk setiap kelas (Batu, Gunting, Kertas) dalam dataset.")
-    st.write("Jumlah gambar gunting: 750")
-    st.write("Jumlah gambar kertas: 712.")
-    st.write("Jumlah gambar batu: 726.")
-    st.write("Dataset menggunakan jumlah gambar yang hampir seimbang atau tidak adanya data yang mendominasi. Karena data balance maka tidak perlu dilakukan oversampling atau undersampling pada tiap kelasnya.")
+    st.write("2. EDA 2: Class Distribution")
+    st.image(os.path.join(base_src, "eda2.png"), caption="EDA 2 Result: Class Distribution", use_container_width=True)  
+    st.write("The chart above shows the distribution of images for each class (Rock, Paper, Scissors) in the dataset.")
+    st.write("Number of scissors images: 750")
+    st.write("Number of paper images: 712")
+    st.write("Number of rock images: 726")
+    st.write("The dataset uses an almost balanced number of images for each class, meaning no single class dominates. Because the data is balanced, there is no need for oversampling or undersampling.")
     st.divider()  
 
-    st.write("3. EDA 3: Analisis Dimensi Gambar")
-    st.write("Pada EDA 3 akan dilakukan analisis dimensi dari gambar yang digunakan pada dataset.")
-    st.write("Berdasarkan analisis ini gambar pada tiap kelas memiliki dimensi yang sama yaitu 300x200 piksel. Hal ini penting untuk memastikan bahwa model dapat memproses gambar dengan ukuran yang konsisten." \
-    "Pada dataset memiliki ukuran dimensi gambar yang sama. Berdasarkan hal ini tidak perlu dilakukan adanya standarisasi karena semua data berukuran sama.")
+    st.write("3. EDA 3: Image Dimension Analysis")
+    st.write("In EDA 3, we analyze the dimensions of the images used in the dataset.")
+    st.write("Based on this analysis, images in each class have the same dimensions, which is 300x200 pixels. This is important to ensure that the model processes images with a consistent size. Since all data in the dataset has the same dimensions, no standardization is required.")
     st.divider()
 
 
-    st.write("4. EDA 4: Analisis Jenis Warna")
-    st.image("./src/eda4.png", caption="Hasil EDA 4 Analisis Jenis Warna", use_container_width=True)
-    st.write("Berdasarkan analisis ini jika gambar diubah menjadi hijau maka bentuk tangan tidak terlalu terlihat. Sehingga model sebaiknya tidak terlalu memprioritaskan bobot pada fitur di kanal warna hijau.")
+    st.write("4. EDA 4: Color Type Analysis")
+    st.image(os.path.join(base_src, "eda4.png"), caption="EDA 4 Result: Color Type Analysis", use_container_width=True)
+    st.write("Based on this analysis, if the image is converted to green, the hand shape is not clearly visible. Therefore, the model should not prioritize weights on features in the green color channel.")
     st.divider()
 
-    st.write("5. EDA 5: Analisis Letak Objek")
-    st.image("./src/eda5.1.png", caption="Hasil EDA 5 Analisis Letak Objek Kelas Rock", use_container_width=True)
-    st.image("./src/eda5.2.png", caption="Hasil EDA 5 Analisis Letak Objek Kelas Paper", use_container_width=True)
-    st.image("./src/eda5.3.png", caption="Hasil EDA 5 Analisis Letak Objek Kelas Scissors", use_container_width=True)
-    st.write("Berdasarkan bentuk gambar, posisi tangan selalu sama. Sehingga pada model harus dibuat data baru untuk mengubah posisi dari tiap tangan agar model memiliki performa yang lebih baik dalam membaca posisi tangan.")
+    st.write("5. EDA 5: Object Position Analysis")
+    st.image(os.path.join(base_src, "eda5.1.png"), caption="EDA 5 Result: Object Position Analysis - Rock Class", use_container_width=True)
+    st.image(os.path.join(base_src, "eda5.2.png"), caption="EDA 5 Result: Object Position Analysis - Paper Class", use_container_width=True)
+    st.image(os.path.join(base_src, "eda5.3.png"), caption="EDA 5 Result: Object Position Analysis - Scissors Class", use_container_width=True)
+    st.write("Based on the images, the hand position is always similar. Therefore, new data (augmentation) should be created to vary the hand positions so the model can better recognize gestures in different locations.")
     st.divider()
 
-    st.write("6. EDA 6: Analisis Intensitas Piksel")
-    st.image("./src/eda6.1.png", caption="Hasil EDA 6 Analisis Intensitas Piksel dari Kelas Rock", use_container_width=True)
-    st.image("./src/eda6.2.png", caption="Hasil EDA 6 Analisis Intensitas Piksel dari Kelas Paper", use_container_width=True)
-    st.image("./src/eda6.3.png", caption="Hasil EDA 6 Analisis Intensitas Piksel dari Kelas Scissors", use_container_width=True)
-    st.write("Berdasarkan frekusensi warna yang telah diubah menjadi hitam putih dataset memiliki nilai kontras yang cukup baik dan akan memudahkan model dalam mendeteksi bentuk tangan.")
+    st.write("6. EDA 6: Pixel Intensity Analysis")
+    st.image(os.path.join(base_src, "eda6.1.png"), caption="EDA 6 Result: Pixel Intensity Analysis - Rock Class", use_container_width=True)
+    st.image(os.path.join(base_src, "eda6.2.png"), caption="EDA 6 Result: Pixel Intensity Analysis - Paper Class", use_container_width=True)
+    st.image(os.path.join(base_src, "eda6.3.png"), caption="EDA 6 Result: Pixel Intensity Analysis - Scissors Class", use_container_width=True)
+    st.write("Based on the grayscale color distributions, the dataset has good contrast values, which will make it easier for the model to detect hand shapes.")
  
 if __name__ == "__main__":
     run()  
