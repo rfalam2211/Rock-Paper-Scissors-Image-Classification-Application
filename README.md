@@ -11,7 +11,7 @@ An advanced computer vision application that classifies hand gestures into **Roc
 ## 🔗 Quick Links
 
 - **Dataset:** [Kaggle Rock-Paper-Scissors](https://www.kaggle.com/datasets/drgfreeman/rockpaperscissors)
-- **Live Demo:** [Hugging Face Spaces](https://huggingface.co/spaces/rfalam/Graded-Challenge-7_Riko_RMT-043)
+- **Live Demo:** [Hugging Face Spaces](https://huggingface.co/spaces/rfalam/Rock-Paper-Scissors_Simple-Prediction)
 
 ---
 
